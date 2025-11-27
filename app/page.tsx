@@ -177,7 +177,10 @@ export default function Chat() {
                     <Image src="/logo.png" alt="Logo" width={48} height={48} />
                   </AvatarFallback>
                 </Avatar>
-                <p className="text-lg font-semibold tracking-tight">Chat with {AI_NAME}</p>
+                <div>
+                  <p className="text-lg font-semibold tracking-tight">Chat with {AI_NAME}</p>
+                  <p className="text-xs text-muted-foreground">Real Madrid Match Companion</p>
+                </div>
               </ChatHeaderBlock>
               <ChatHeaderBlock className="justify-end">
                 <Button
@@ -216,14 +219,7 @@ export default function Chat() {
               <div className="flex-1" />
               <div className="w-full flex flex-col items-center">
                 {isClient ? (
-                  <>
-                    <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
-                    {status === "submitted" && (
-                      <div className="flex justify-start max-w-3xl w-full">
-                        <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                      </div>
-                    )}
-                  </>
+                  <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} loaderTextIndex={loaderTextIndex} loadingPhrases={loadingPhrases} />
                 ) : (
                   <div className="flex justify-center max-w-2xl w-full">
                     <Loader2 className="size-4 animate-spin text-muted-foreground" />
@@ -237,15 +233,6 @@ export default function Chat() {
         {/* PART 3: Input box and footer */}
         <div className="flex-shrink-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible">
           <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
-            {/* Loader pill placed just above the input box */}
-            {(status === "submitted" || status === "streaming") && (
-              <div aria-live="polite" className="w-full flex justify-center mb-3">
-                <div className="inline-flex items-center gap-3 px-3 py-2 rounded-full bg-blue-600 text-white text-sm shadow-md">
-                  <Loader2 className="size-4 animate-spin text-white" />
-                  <span>{loadingPhrases[loaderTextIndex]}</span>
-                </div>
-              </div>
-            )}
             <div className="message-fade-overlay" />
             <div className="max-w-3xl w-full">
               <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
@@ -304,7 +291,7 @@ export default function Chat() {
             </div>
           </div>
           <div className="w-full px-5 py-3 items-center flex justify-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;<Link href="/terms" className="underline">Terms of Use</Link>&nbsp;Powered by&nbsp;<Link href="https://ringel.ai/" className="underline">Ringel.AI</Link>
+            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;<Link href="/terms" className="underline">Terms of Service</Link>&nbsp;Powered by&nbsp;<Link href="https://ringel.ai/" className="underline">Ringel.AI</Link>
           </div>
         </div>
       </main>

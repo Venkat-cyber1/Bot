@@ -80,23 +80,23 @@ export async function searchPinecone(
 
 /**
  * Legacy search function for backward compatibility
- * Uses default namespace and returns formatted string
+ * Uses historic_knowledge namespace and returns formatted string
  */
 export async function searchPineconeLegacy(
     query: string,
 ): Promise<string> {
-    const results = await pineconeIndex.namespace('default').searchRecords({
-        query: {
-            inputs: {
-                text: query,
-            },
-            topK: PINECONE_TOP_K,
-        },
-        fields: ['text', 'pre_context', 'post_context', 'source_url', 'source_description', 'source_type', 'order'],
+    const results = await searchPinecone(query, 'historic_knowledge');
+    
+    const chunks = searchResultsToChunks({
+        matches: results.results.map(r => ({
+            id: '',
+            score: r.score,
+            metadata: r.metadata,
+            values: []
+        }))
     });
-
-    const chunks = searchResultsToChunks(results);
+    
     const sources = getSourcesFromChunks(chunks);
     const context = getContextFromSources(sources);
-    return `< results > ${context} </results>`;
+    return `<results>${context}</results>`;
 }

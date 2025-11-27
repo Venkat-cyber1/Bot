@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MyAI3",
-  description: "MyAI3",
+  title: "Raul",
+  description: "Real Madrid Match Companion",
 };
 
 export default function RootLayout({

@@ -41,16 +41,16 @@ function formatVectorSearchArgs(_: string, input: unknown): string {
 
 const TOOL_DISPLAY_MAP: Record<string, ToolDisplay> = {
     webSearch: {
-        call_label: "Searching the web",
-        call_icon: <Search className="w-4 h-4" />,
-        result_label: "Searched the web",
-        result_icon: <Search className="w-4 h-4" />,
+        call_label: "Fetching live/recent data from the web",
+        call_icon: <Globe className="w-4 h-4" />,
+        result_label: "Found live/recent data",
+        result_icon: <Globe className="w-4 h-4" />,
         formatArgs: formatWebSearchArgs,
     },
     vectorDatabaseSearch: {
-        call_label: "Searching vector database",
+        call_label: "Retrieving Real Madrid knowledge",
         call_icon: <Book className="w-4 h-4" />,
-        result_label: "Found relevant match data",
+        result_label: "Retrieved Real Madrid knowledge",
         result_icon: <Book className="w-4 h-4" />,
         formatArgs: formatVectorSearchArgs,
     },

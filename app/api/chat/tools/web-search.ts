@@ -5,26 +5,23 @@ import Exa from 'exa-js';
 const exa = new Exa(process.env.EXA_API_KEY);
 
 /**
- * Enhance query based on search type
+ * Execute Exa web search for Real Madrid-related queries
  */
-function enhanceQuery(query: string, queryType?: 'tactics' | 'fan_conversation'): string {
-  if (queryType === 'tactics') {
-    // Add tactical explanation terms
-    return `${query} football explanation tactics explained soccer tactics`;
-  } else if (queryType === 'fan_conversation') {
-    // Add fan reaction terms
-    return `${query} reddit twitter reactions fan opinions live reactions`;
-  }
-  return query;
-}
-
-/**
- * Execute Exa web search - can be called directly or via tool
- */
-export async function executeWebSearch(query: string, queryType?: 'tactics' | 'fan_conversation') {
+export async function executeWebSearch(query: string, searchType?: 'live' | 'previous' | 'fan_reaction') {
   try {
-    const enhancedQuery = enhanceQuery(query, queryType);
+    // Enhance query based on search type
+    let enhancedQuery = query;
     
+    if (searchType === 'live') {
+      enhancedQuery = `Real Madrid live match ${query} score updates commentary`;
+    } else if (searchType === 'previous') {
+      enhancedQuery = `Real Madrid match report analysis ${query}`;
+    } else if (searchType === 'fan_reaction') {
+      enhancedQuery = `Real Madrid fans reaction reddit twitter X ${query}`;
+    } else {
+      enhancedQuery = `Real Madrid ${query}`;
+    }
+
     const { results } = await exa.search(enhancedQuery, {
       contents: {
         text: true,
@@ -35,25 +32,25 @@ export async function executeWebSearch(query: string, queryType?: 'tactics' | 'f
     return {
       results: results.map(result => ({
         title: result.title || '',
-        snippet: result.text?.slice(0, 500) || result.text?.slice(0, 500) || '',
+        snippet: result.text?.slice(0, 500) || '',
         url: result.url || '',
         content: result.text?.slice(0, 1000) || '',
         publishedDate: result.publishedDate,
       }))
     };
   } catch (error) {
-    console.error('Error searching the web:', error);
+    console.error('Error searching the web with EXA:', error);
     return { results: [] };
   }
 }
 
 export const webSearch = tool({
-  description: 'Search the web for fan conversations, tactical explainers, or general information. Use for fan reactions, social media sentiment, or when needing deeper tactical explanations beyond internal data.',
+  description: 'Search the web (via EXA) for Real Madrid live match updates, previous match analysis, or fan reactions. Use for current information not available in historic knowledge base.',
   inputSchema: z.object({
-    query: z.string().min(1).describe('The search query'),
-    queryType: z.enum(['tactics', 'fan_conversation']).optional().describe('Optional: "tactics" for tactical explanations, "fan_conversation" for fan reactions and social media sentiment'),
+    query: z.string().min(1).describe('The search query, e.g., "vs Barcelona" or "Bellingham performance"'),
+    searchType: z.enum(['live', 'previous', 'fan_reaction']).optional().describe('Type of search: "live" for current match, "previous" for match reports, "fan_reaction" for social media sentiment'),
   }),
-  execute: async ({ query, queryType }) => {
-    return await executeWebSearch(query, queryType);
+  execute: async ({ query, searchType }) => {
+    return await executeWebSearch(query, searchType);
   },
 });

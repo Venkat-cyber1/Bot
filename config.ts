@@ -32,9 +32,8 @@ export const DATE_AND_TIME = getDateAndTime();
 
 export const AI_NAME = "Raul";
 export const OWNER_NAME = "Venkat K";
-export const CURRENT_MATCH_ID = "match_1";
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, your live football match companion. I can help you with live match analysis, player performance, tactical insights, historical stats, and what fans are saying. Ask me anything about the match!`
+export const WELCOME_MESSAGE = `Hola! I'm ${AI_NAME}, your Real Madrid match companion. I can help you with live match updates, previous match analysis, fan reactions, tactics, player insights, and everything about Real Madrid. Ask me anything!`
 
 export const CLEAR_CHAT_TEXT = "New";
 

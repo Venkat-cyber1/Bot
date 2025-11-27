@@ -1,6 +1,5 @@
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-import { OWNER_NAME } from "@/config";
 
 export default function Terms() {
     return (
@@ -13,193 +12,138 @@ export default function Terms() {
                     <ArrowLeftIcon className="w-4 h-4" />
                     Back to Chatbot
                 </Link>
-                <h1 className="text-3xl font-bold">MyAI3</h1>
-                <h2 className="text-2xl font-semibold">Terms of Use / Disclaimer</h2>
 
-                <p className="text-gray-700">
-                    The following terms of use govern access to and use of the MyAI3
-                    Assistant ("AI Chatbot"), an artificial intelligence tool provided by
-                    {OWNER_NAME} ("I", "me", or "myself"). By engaging with the AI
-                    Chatbot, you agree to these terms. If you do not agree, you may not
-                    use the AI Chatbot.
-                </p>
+                <div className="prose prose-sm prose-ol:list-decimal prose-li:marker:text-gray-800 text-gray-800 bg-white p-6 rounded-md shadow-sm max-w-none [&_ol]:ml-5 [&_li]:ml-2">
+                    <h1 className="font-bold">Raul – Terms of Service (TOS)</h1>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">General Information</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Provider and Purpose:</span> The
-                            AI Chatbot is a tool developed and maintained by {OWNER_NAME}. It
-                            is intended solely to assist users with questions and coursework
-                            related to courses taught by {OWNER_NAME}. The AI Chatbot is not
-                            affiliated with, endorsed by, or operated by the course provider.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Third-Party Involvement:</span>{" "}
-                            The AI Chatbot utilizes multiple third-party platforms and
-                            vendors, some of which operate outside the United States. Your
-                            inputs may be transmitted, processed, and stored by these
-                            third-party systems. As such, confidentiality, security, and privacy
-                            cannot be guaranteed, and data transmission may be inherently
-                            insecure and subject to interception.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Guarantee of Accuracy:</span>{" "}
-                            The AI Chatbot is designed to provide helpful and relevant
-                            responses but may deliver inaccurate, incomplete, or outdated
-                            information. Users are strongly encouraged to independently verify
-                            any information before relying on it for decisions or actions.
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Liability</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Use at Your Own Risk:</span> The
-                            AI Chatbot is provided on an "as-is" and "as-available" basis. To
-                            the fullest extent permitted by law:
-                            <ul className="list-disc list-inside ml-6 mt-2 space-y-2">
-                                <li>
-                                    {OWNER_NAME} disclaims all warranties, express or implied,
-                                    including but not limited to warranties of merchantability,
-                                    fitness for a particular purpose, and non-infringement.
-                                </li>
-                                <li>
-                                    {OWNER_NAME} is not liable for any errors, inaccuracies, or
-                                    omissions in the information provided by the AI Chatbot.
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">
-                                No Responsibility for Damages:
-                            </span>{" "}
-                            Under no circumstances shall {OWNER_NAME}, his collaborators,
-                            partners, affiliated entities, or representatives be liable for
-                            any direct, indirect, incidental, consequential, special, or
-                            punitive damages arising out of or in connection with the use of
-                            the AI Chatbot.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">
-                                Modification or Discontinuation:
-                            </span>{" "}
-                            I reserve the right to modify, suspend, or discontinue the AI
-                            Chatbot's functionalities at any time without notice.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Future Fees:</span> While the AI
-                            Chatbot is currently provided free of charge, I reserve the right
-                            to implement a fee for its use at any time.
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">User Responsibilities</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Eligibility:</span> Use of the AI
-                            Chatbot is restricted to individuals aged 18 or older.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Prohibited Conduct:</span> By
-                            using the AI Chatbot, you agree not to:
-                            <ul className="list-disc list-inside ml-6 mt-2 space-y-2">
-                                <li>Post or transmit content that is defamatory, offensive, intimidating, illegal, racist, discriminatory, obscene, or otherwise inappropriate.</li>
-                                <li>Use the AI Chatbot to engage in unlawful or unethical activities.</li>
-                                <li>Attempt to compromise the security or functionality of the AI Chatbot</li>
-                                <li>Copy, distribute, modify, reverse engineer, decompile, or extract the source code of the AI Chatbot without explicit written consent.</li>
-                            </ul>
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Data Privacy and Security</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Privacy Guarantee:</span> The
-                            AI Chatbot does not guarantee privacy, confidentiality, or
-                            security of the information you provide. Conversations may be
-                            reviewed by {OWNER_NAME}, collaborators, partners, or affiliated
-                            entities for purposes such as improving the AI Chatbot, developing
-                            course materials, and conducting research.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Public Information:</span> Any
-                            information you provide through the AI Chatbot is treated as
-                            public.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Data Transmission:</span> Inputs
-                            may be transmitted to and processed by third-party services.
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Ownership of Content and Commercial Use</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Surrender of Rights:</span> By
-                            using the AI Chatbot, you irrevocably assign and surrender all rights,
-                            title, interest, and intellectual property rights in any content, inputs
-                            you provide, and outputs generated by the AI Chatbot to {OWNER_NAME}.
-                            This includes, but is not limited to, text, questions, and conversations.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Commercial and Research Use:</span>{" "}
-                            {OWNER_NAME} reserves the right to use any input provided by users and
-                            any output generated by the AI Chatbot for commercial purposes, research,
-                            or other activities without compensation or notification to users.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Claim to Gains or Profits:</span>{" "}
-                            Users agree that they have no rights, claims, or entitlement to
-                            any gains, profits, or benefits derived from the use or
-                            exploitation of the content provided to the AI Chatbot.
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Indemnification</h3>
-                    <p className="text-gray-700">
-                        By using the AI Chatbot, you agree to indemnify and hold harmless
-                        {OWNER_NAME}, his collaborators, partners, affiliated entities, and
-                        representatives from any claims, damages, losses, or liabilities
-                        arising out of your use of the AI Chatbot or violation of these
-                        terms.
+                    <p>
+                        Welcome to Raul-Real Madrid Match Companion, an AI-powered football companion designed to provide match insights, tactical explainers, historical knowledge, and summaries of publicly available discussions using external search APIs. By accessing or using Raul, you agree to the following Terms of Service. If you do not agree, you must not use the service.
                     </p>
-                </div>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Governing Law and Jurisdiction</h3>
-                    <p className="text-gray-700">
-                        These terms are governed by the laws of the State of North Carolina,
-                        United States. Additional jurisdictions may apply for users outside
-                        the United States, subject to applicable local laws. In case of
-                        conflicts, the laws of North Carolina shall prevail to the extent
-                        permissible. Any disputes arising under or in connection with these
-                        terms shall be subject to the exclusive jurisdiction of the courts
-                        located in North Carolina.
-                    </p>
-                </div>
+                    <h2 className="font-bold">1. Service Description</h2>
+                    <p  >Raul is an informational AI assistant that provides:</p>
+                    <ol>
+                        <li>1.Live and recent football match insights sourced via external web search tools (e.g., EXA).</li>
+                        <li>2.Fan reaction summaries based on publicly available online discussions.</li>
+                        <li>3.Tactical, historical, and club-related explanations using pre-indexed evergreen knowledge in a vector database.</li>
+                        <li>4.General football concepts using LLM-based reasoning.</li>
+                    </ol>
+                    <p>Raul is not an official Real Madrid product, nor affiliated with any club, league, federation, or broadcaster.</p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Acceptance of Terms</h3>
-                    <p className="text-gray-700">
-                        By using the AI Chatbot, you confirm that you have read, understood,
-                        and agreed to these Terms of Use and Disclaimer. If you do not
-                        agree with any part of these terms, you may not use the AI Chatbot.
-                    </p>
-                </div>
+                    <h2 className="font-bold">2. No Real-Time Guarantees</h2>
+                    <p  >Raul attempts to fetch the latest match information using external sources. However:</p>
+                    <ol>
+                        <li>1.Live data may be delayed, inaccurate, incomplete, or unavailable.</li>
+                        <li>2.Search results and insights depend entirely on third-party content.</li>
+                        <li>3.Raul does not guarantee real-time accuracy, correctness, or completeness.</li>
+                    </ol>
+                    <p>Use the service at your own discretion.</p>
 
-                <div className="mt-8 text-sm text-gray-600">
-                    <p>Last Updated: November 17, 2025</p>
+                    <h2 className="font-bold">3. Use Restrictions</h2>
+                    <p  >You agree not to use Raul:</p>
+                    <ol>
+                        <li>1.For gambling, betting, or financial decisions.</li>
+                        <li>2.For reporting, journalism, or official match referencing.</li>
+                        <li>3.To impersonate an official football authority, club, or league.</li>
+                        <li>4.To generate or share harmful, offensive, or abusive content.</li>
+                        <li>5.For automated scraping or reverse engineering.</li>
+                    </ol>
+
+                    <h2 className="font-bold">4. Intellectual Property</h2>
+                    <ol>
+                        <li>1.ll AI-generated content belongs to the respective AI providers (OpenAI, EXA) under their licensing terms.</li>
+                        <li>2.Your inputs remain yours.</li>
+                        <li>3.You grant Raul the right to process your inputs to provide the service.</li>
+                        <li>4.Real Madrid trademarks, logos, and brand identity belong to Real Madrid CF and are referenced only for descriptive purposes.</li>
+                    </ol>
+                    <p>Raul does not claim ownership of any brand or trademark.</p>
+
+                    <h2 className="font-bold">5. Data Sources and Attribution</h2>
+                    <p  >Raul may use:</p>
+                    <ol>
+                        <li>1.External web search APIs (e.g., EXA)</li>
+                        <li>2.Publicly accessible webpages</li>
+                        <li>3.Evergreen documents manually inserted into a vector database</li>
+                        <li>4.General football knowledge from LLM models</li>
+                    </ol>
+                    <p>The bot summarizes or rephrases content retrieved from these sources. Raul does not store, host, or republish third-party copyrighted content verbatim.</p>
+
+                    <h2 className="font-bold">6. User Conduct</h2>
+                    <p  >You agree not to submit:</p>
+                    <ol>
+                        <li>1.Personal or sensitive information</li>
+                        <li>2.Offensive, discriminatory, or abusive messages</li>
+                        <li>3.Malicious inputs designed to exploit or break the system</li>
+                        <li>4.Requests for illegal actions</li>
+                    </ol>
+                    <p>If such content is submitted, the bot may refuse to respond or terminate your session.</p>
+
+                    <h2 className="font-bold">7. Disclaimer of Accuracy and Liability</h2>
+                    <p  >Raul is provided "as is" without warranties of any kind, including:</p>
+                    <ol>
+                        <li>1.Accuracy</li>
+                        <li>2.Reliability</li>
+                        <li>3.Timeliness</li>
+                        <li>4.Fitness for a particular purpose</li>
+                    </ol>
+                    <p  >You understand and agree that:</p>
+                    <ol>
+                        <li>a.Raul is experimental and may produce incorrect or inconsistent outputs.</li>
+                        <li>b.You use the information at your own risk.</li>
+                        <li>c.The creators are not liable for decisions made based on AI responses.</li>
+                    </ol>
+
+                    <h2 className="font-bold">8. No Professional Advice</h2>
+                    <p  >Raul does NOT provide:</p>
+                    <ol>
+                        <li>1.Betting or gambling predictions</li>
+                        <li>2.Legal advice</li>
+                        <li>3.Financial advice</li>
+                        <li>4.Professional sports analysis for publication</li>
+                    </ol>
+                    <p>Raul's insights are for informational and educational purposes only.</p>
+
+                    <h2 className="font-bold">9. Service Changes &amp; Updates</h2>
+                    <p>The service may change, pause, or terminate at any time without notice. Features may be added, removed, or modified.</p>
+
+                    <h2 className="font-bold">10. Privacy &amp; Data Handling</h2>
+                    <p  >Raul may process:</p>
+                    <ol>
+                        <li>1.User messages</li>
+                        <li>2.Metadata such as timestamps</li>
+                        <li>3.Search queries sent to external APIs</li>
+                    </ol>
+                    <p  >Data is used only to:</p>
+                    <ol>
+                        <li>1.Provide responses</li>
+                        <li>2.Improve system safety and performance</li>
+                    </ol>
+                    <p>Raul does not store personal data intentionally. Do not share sensitive information.</p>
+
+                    <h2 className="font-bold">11. Third-Party Integrations</h2>
+                    <p  >Raul uses external APIs such as:</p>
+                    <ol>
+                        <li>1.OpenAI</li>
+                        <li>2.EXA</li>
+                        <li>3.Pinecone</li>
+                    </ol>
+                    <p>Use of Raul implies acceptance of those providers’ terms. The creators are not responsible for outages, errors, or content generated by these APIs.</p>
+
+                    <h2 className="font-bold">12. Limitation of Liability</h2>
+                    <p  >To the maximum extent permitted by law:</p>
+                    <ol>
+                        <li>1.The creators are not liable for indirect, incidental, or consequential damages.</li>
+                        <li>2.The service is provided without guarantees.</li>
+                        <li>3.Use of Raul constitutes agreement to release the creators from claims related to the AI output.</li>
+                    </ol>
+
+                    <h2 className="font-bold">13. Governing Law</h2>
+                    <p>These Terms of Service are governed by your local jurisdiction unless otherwise specified. Disputes must be resolved under applicable local laws.</p>
+
+                    <h2 className="font-bold">14. Contact</h2>
+                    <p>For questions or feedback about Raul, contact: 📩 <a className="underline" href="https://github.com/Venkat-cyber1">https://github.com/Venkat-cyber1</a></p>
+
+                    <p className="text-sm text-gray-600">Last updated: November 27, 2025</p>
                 </div>
             </div>
         </div>

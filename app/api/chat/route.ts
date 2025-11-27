@@ -1,14 +1,89 @@
 
 import { streamText, UIMessage, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse } from 'ai';
-import { MODEL, CURRENT_MATCH_ID } from '@/config';
+import { MODEL } from '@/config';
 import { SYSTEM_PROMPT } from '@/prompts';
 import { isContentFlagged } from '@/lib/moderation';
-import { classifyIntent } from '@/lib/intent';
+import { classifyIntent, type ParsedRealMadridIntent, isCurrentInfoQuery } from '@/lib/intent';
 import { searchPinecone } from '@/lib/pinecone';
-import { webSearch, executeWebSearch } from './tools/web-search';
+import { executeWebSearch } from './tools/web-search';
+import { webSearch } from './tools/web-search';
 import { vectorDatabaseSearch } from './tools/search-vector-database';
 
 export const maxDuration = 30;
+
+async function buildExaContext(
+  userMessage: string,
+  intent: string,
+  entities: Partial<ParsedRealMadridIntent>
+): Promise<string> {
+  try {
+    let query = userMessage;
+    let searchType: 'live' | 'previous' | 'fan_reaction' | undefined;
+
+    if (intent === 'exa_live_match') {
+      query = `${entities.opponent ? `vs ${entities.opponent}` : ''} ${entities.competition || ''}`;
+      searchType = 'live';
+    } else if (intent === 'exa_previous_match') {
+      query = `${entities.opponent ? `vs ${entities.opponent}` : ''} ${entities.competition || ''}`;
+      searchType = 'previous';
+    } else if (intent === 'exa_fan_reaction') {
+      query = entities.player || entities.topic || userMessage;
+      searchType = 'fan_reaction';
+    }
+
+    const result = await executeWebSearch(query.trim(), searchType);
+
+    if (!result.results || result.results.length === 0) {
+      return '';
+    }
+
+    const contextItems = result.results
+      .map((r, idx) => `[${idx + 1}] ${r.title}\n${r.snippet}\n(Source: ${r.url})`)
+      .join('\n\n');
+
+    return `<exa_results>\n${contextItems}\n</exa_results>`;
+  } catch (error) {
+    console.error('Error building EXA context:', error);
+    return '';
+  }
+}
+
+async function buildPineconeContext(
+  userMessage: string,
+  entities: Partial<ParsedRealMadridIntent>
+): Promise<string> {
+  try {
+    const filters: Record<string, any> = {};
+
+    // Add optional filters based on extracted entities
+    if (entities.player) {
+      filters.player_name = { $eq: entities.player };
+    }
+    if (entities.topic) {
+      filters.topic = { $eq: entities.topic };
+    }
+
+    const result = await searchPinecone(
+      userMessage,
+      'historic_knowledge',
+      Object.keys(filters).length > 0 ? filters : undefined
+    );
+
+    if (!result.results || result.results.length === 0) {
+      return '';
+    }
+
+    const contextItems = result.results
+      .map((r, idx) => `[${idx + 1}] ${r.text}\n(Relevance: ${(r.score * 100).toFixed(1)}%)`)
+      .join('\n\n');
+
+    return `<historic_knowledge>\n${contextItems}\n</historic_knowledge>`;
+  } catch (error) {
+    console.error('Error building Pinecone context:', error);
+    return '';
+  }
+}
+
 export async function POST(req: Request) {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
@@ -69,194 +144,66 @@ export async function POST(req: Request) {
     const parsedIntent = await classifyIntent(userMessageText);
     let retrievedContext = '';
 
-    // Perform searches based on intent BEFORE calling streamText
+    // Perform retrieval based on intent BEFORE calling streamText
     try {
         switch (parsedIntent.intent) {
-            case 'performance': {
-                // Query performance_analytics namespace
-                const filters: Record<string, any> = {
-                    match_id: { $eq: CURRENT_MATCH_ID }
-                };
-
-                if (parsedIntent.player) {
-                    filters.player = { $eq: parsedIntent.player };
-                }
-
-                if (parsedIntent.minute !== undefined && parsedIntent.minute !== null) {
-                    // Add minute range filter (e.g., ±5 minutes around specified minute)
-                    const minuteStart = Math.max(0, parsedIntent.minute - 5);
-                    const minuteEnd = parsedIntent.minute + 5;
-                    filters.minute = { $gte: minuteStart, $lte: minuteEnd };
-                }
-
-                const perfResults = await searchPinecone(
-                    userMessageText,
-                    'performance_analytics',
-                    filters
-                );
-
-                // Format results for context
-                const perfContext = perfResults.results
-                    .map((r, idx) => {
-                        const imageUrl = r.metadata?.image_url as string | undefined;
-                        const imageAlt = r.metadata?.image_alt as string | undefined;
-                        const imageLine = imageUrl
-                            ? `\nImage URL: ${imageUrl}${imageAlt ? `\nImage Alt: ${imageAlt}` : ''}`
-                            : '';
-                        return `[${idx + 1}] ${r.text}${imageLine}\n(Score: ${r.score.toFixed(3)})`;
-                    })
-                    .join('\n\n');
-                
-                retrievedContext += `\n\n<performance_analytics_results>\n${perfContext}\n</performance_analytics_results>\n`;
+            case 'exa_live_match': {
+                retrievedContext = await buildExaContext(userMessageText, 'exa_live_match', parsedIntent);
                 break;
             }
 
-            case 'history': {
-                // Query historic_knowledge namespace
-                const filters: Record<string, any> = {};
-
-                if (parsedIntent.player) {
-                    filters.player = { $eq: parsedIntent.player };
-                }
-
-                if (parsedIntent.team) {
-                    filters.team = { $eq: parsedIntent.team };
-                }
-
-                const histResults = await searchPinecone(
-                    userMessageText,
-                    'historic_knowledge',
-                    Object.keys(filters).length > 0 ? filters : undefined
-                );
-
-                const histContext = histResults.results
-                    .map((r, idx) => {
-                        const imageUrl = r.metadata?.image_url as string | undefined;
-                        const imageAlt = r.metadata?.image_alt as string | undefined;
-                        const imageLine = imageUrl
-                            ? `\nImage URL: ${imageUrl}${imageAlt ? `\nImage Alt: ${imageAlt}` : ''}`
-                            : '';
-                        return `[${idx + 1}] ${r.text}${imageLine}\n(Score: ${r.score.toFixed(3)})`;
-                    })
-                    .join('\n\n');
-                
-                retrievedContext += `\n\n<historic_knowledge_results>\n${histContext}\n</historic_knowledge_results>\n`;
+            case 'exa_previous_match': {
+                retrievedContext = await buildExaContext(userMessageText, 'exa_previous_match', parsedIntent);
                 break;
             }
 
-            case 'tactics': {
-                // Tactical questions: rely on internal historic_knowledge only.
-                const filters: Record<string, any> = {};
-
-                if (parsedIntent.team) {
-                    filters.team = { $eq: parsedIntent.team };
-                }
-
-                const tacticsResults = await searchPinecone(
-                    userMessageText,
-                    'historic_knowledge',
-                    Object.keys(filters).length > 0 ? filters : undefined
-                );
-
-                const tacticsContext = tacticsResults.results
-                    .map((r, idx) => {
-                        const imageUrl = r.metadata?.image_url as string | undefined;
-                        const imageAlt = r.metadata?.image_alt as string | undefined;
-                        const imageLine = imageUrl
-                            ? `\nImage URL: ${imageUrl}${imageAlt ? `\nImage Alt: ${imageAlt}` : ''}`
-                            : '';
-                        return `[${idx + 1}] ${r.text}${imageLine}\n(Score: ${r.score.toFixed(3)})`;
-                    })
-                    .join('\n\n');
-
-                retrievedContext += `\n\n<tactics_internal_data>\n${tacticsContext}\n</tactics_internal_data>\n`;
+            case 'exa_fan_reaction': {
+                retrievedContext = await buildExaContext(userMessageText, 'exa_fan_reaction', parsedIntent);
                 break;
             }
 
-            case 'fan_conversation': {
-                // Skip Pinecone, call Exa only
-                let exaContext = '';
-                try {
-                    const exaResult = await executeWebSearch(userMessageText, 'fan_conversation');
-                    exaContext = exaResult?.results?.map((r: any, idx: number) => 
-                        `[${idx + 1}] ${r.title}: ${r.snippet} (${r.url})`
-                    ).join('\n\n') || '';
-                } catch (error) {
-                    console.error('Error calling Exa for fan conversation:', error);
-                    exaContext = '';
-                }
+            case 'pinecone_historic': {
+                retrievedContext = await buildPineconeContext(userMessageText, parsedIntent);
+                break;
+            }
 
-                retrievedContext += `\n\n<fan_conversation_results>\n${exaContext}\n</fan_conversation_results>\n`;
+            case 'general_football': {
+                // No retrieval needed - use GPT knowledge only
+                retrievedContext = '';
                 break;
             }
 
             case 'generic':
             default: {
-                // General / non-match-specific questions:
-                // Answer using internal Redchester knowledge only.
-                const [perfResults, histResults] = await Promise.all([
-                    searchPinecone(userMessageText, 'performance_analytics'),
-                    searchPinecone(userMessageText, 'historic_knowledge')
-                ]);
-
-                const perfContext = perfResults.results
-                    .map((r, idx) => {
-                        const imageUrl = r.metadata?.image_url as string | undefined;
-                        const imageAlt = r.metadata?.image_alt as string | undefined;
-                        const imageLine = imageUrl
-                            ? `\nImage URL: ${imageUrl}${imageAlt ? `\nImage Alt: ${imageAlt}` : ''}`
-                            : '';
-                        return `[${idx + 1}] ${r.text}${imageLine}\n(Score: ${r.score.toFixed(3)})`;
-                    })
-                    .join('\n\n');
-
-                const histContext = histResults.results
-                    .map((r, idx) => {
-                        const imageUrl = r.metadata?.image_url as string | undefined;
-                        const imageAlt = r.metadata?.image_alt as string | undefined;
-                        const imageLine = imageUrl
-                            ? `\nImage URL: ${imageUrl}${imageAlt ? `\nImage Alt: ${imageAlt}` : ''}`
-                            : '';
-                        return `[${idx + 1}] ${r.text}${imageLine}\n(Score: ${r.score.toFixed(3)})`;
-                    })
-                    .join('\n\n');
-
-                retrievedContext += `\n\n<performance_analytics_results>\n${perfContext}\n</performance_analytics_results>\n`;
-                retrievedContext += `\n\n<historic_knowledge_results>\n${histContext}\n</historic_knowledge_results>\n`;
+                // For generic intent, we need a smart fallback strategy
+                // Check if it's asking for current/news info about Real Madrid
+                const isCurrentInfo = isCurrentInfoQuery(userMessageText);
+                
+                if (isCurrentInfo) {
+                  // Treat as live match query - fetch from EXA
+                  retrievedContext = await buildExaContext(userMessageText, 'exa_live_match', {});
+                } else {
+                  // Treat as conceptual/historical - try Pinecone first
+                  retrievedContext = await buildPineconeContext(userMessageText, {});
+                }
                 break;
             }
         }
     } catch (error) {
-        console.error('Error during search orchestration:', error);
+        console.error('Error during intent-based retrieval:', error);
         // Continue without context rather than failing
     }
 
     // Build enhanced system prompt with retrieved context
-    const enhancedSystemPrompt = retrievedContext 
-        ? `${SYSTEM_PROMPT}\n\n<retrieved_context>\n${retrievedContext}\n</retrieved_context>\n\nUse the retrieved context above to answer the user's question. Never invent stats or facts - only use information from the retrieved context.`
+    const enhancedSystemPrompt = retrievedContext
+        ? `${SYSTEM_PROMPT}\n\n<retrieved_context>\n${retrievedContext}\n</retrieved_context>\n\nUse the retrieved context above to answer the user's question accurately. If the context doesn't contain the information needed, say so clearly rather than guessing.`
         : SYSTEM_PROMPT;
 
-    // NOTE:
-    // Tools are temporarily disabled because of a runtime incompatibility between
-    // the Vercel AI SDK tooling and the current Zod setup, which triggers
-    // "Cannot read properties of undefined (reading '_zod')" inside the SDK.
-    // Once the correct schema adapter is wired up, the `tools` config can be
-    // re‑enabled.
     const result = streamText({
         model: MODEL,
         system: enhancedSystemPrompt,
         messages: convertToModelMessages(messages),
-        // tools: {
-        //     webSearch,
-        //     vectorDatabaseSearch,
-        // },
         stopWhen: stepCountIs(10),
-        // These provider options are only supported for OpenAI "reasoning" models.
-        // Since we're currently using a non‑reasoning model (gpt-4.1),
-        // we omit reasoning-specific settings to avoid SDK warnings.
-        // If you switch to a reasoning model (e.g. "o3-mini"),
-        // you can reintroduce reasoning configuration here.
-        providerOptions: {}
     });
 
     return result.toUIMessageStreamResponse({
