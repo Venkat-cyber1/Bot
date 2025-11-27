@@ -8,7 +8,7 @@ export const vectorDatabaseSearch = tool({
     inputSchema: z.object({
         query: z.string().describe('The query to search the vector database for. Optimally is a hypothetical answer for similarity search.'),
         namespace: z.enum(["performance_analytics", "historic_knowledge"]).describe('The namespace to search: performance_analytics for live/current match data, historic_knowledge for historical data.'),
-        filters: z.record(z.any()).optional().describe('Optional metadata filters (e.g., { player: { $eq: "Arjun Rao" }, match_id: { $eq: "match_1" } })'),
+        filters: z.record(z.string(), z.any()).optional().describe('Optional metadata filters (e.g., { player: { $eq: "Arjun Rao" }, match_id: { $eq: "match_1" } })'),
     }),
     execute: async ({ query, namespace, filters }) => {
         const searchResult = await searchPinecone(query, namespace, filters);
