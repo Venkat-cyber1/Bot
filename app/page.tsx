@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,8 +22,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
 import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
 
 const formSchema = z.object({
   message: z
@@ -76,6 +76,30 @@ export default function Chat() {
   const { messages, sendMessage, status, stop, setMessages } = useChat({
     messages: initialMessages,
   });
+
+  // Loader phrases and rotating text shown while a response is being generated
+  const loadingPhrases = [
+    "Loading... doing some thinking 🤔",
+    "Crunching match stats... 📊",
+    "Fetching tactical insights... ⚽️",
+    "Assembling a witty reply... 😄",
+    "Almost there... polishing the answer ✨",
+  ];
+  const [loaderTextIndex, setLoaderTextIndex] = useState(0);
+
+  useEffect(() => {
+    let interval: number | undefined;
+    if (status === "submitted" || status === "streaming") {
+      interval = window.setInterval(() => {
+        setLoaderTextIndex((i) => (i + 1) % loadingPhrases.length);
+      }, 1400);
+    } else {
+      setLoaderTextIndex(0);
+    }
+    return () => {
+      if (interval) window.clearInterval(interval);
+    };
+  }, [status]);
 
   useEffect(() => {
     setIsClient(true);
@@ -137,9 +161,10 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center font-sans dark:bg-black">
-      <main className="w-full dark:bg-black h-screen relative">
-        <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
+    <div className="flex h-screen flex-col font-sans dark:bg-black">
+      <main className="w-full dark:bg-black flex flex-col h-screen relative">
+        {/* PART 1: Header with logo */}
+        <div className="flex-shrink-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible">
           <div className="relative overflow-visible">
             <ChatHeader>
               <ChatHeaderBlock />
@@ -168,43 +193,59 @@ export default function Chat() {
             </ChatHeader>
           </div>
         </div>
-        {/* Background image covering center area from below header to above input */}
-        <div className="fixed top-[88px] bottom-[200px] left-0 right-0 z-0 flex justify-center items-center pointer-events-none">
-          <div className="relative w-full h-full">
-            <Image
-              src="/background-center.png"
-              alt="Background decoration"
-              fill
-              className="object-contain opacity-50 dark:opacity-30"
-              priority={false}
-            />
+
+        {/* PART 2: Background image + Conversation space */}
+        <div className="flex-1 relative overflow-hidden flex flex-col">
+          {/* Background image container */}
+          <div className="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
+            <div className="relative w-full h-full">
+              <Image
+                src="/background-center-v3.png"
+                alt="Background"
+                fill
+                priority
+                style={{ objectFit: 'fill', objectPosition: 'center', opacity: 1 }}
+                className="bg-center-image"
+              />
+            </div>
           </div>
-        </div>
-        
-        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[200px] relative z-10">
-          <div className="flex flex-col items-center min-h-full">
-            <div className="flex-1" />
-            <div className="w-full flex flex-col items-center">
-              {isClient ? (
-                <>
-                  <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
-                  {status === "submitted" && (
-                    <div className="flex justify-start max-w-3xl w-full">
-                      <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="flex justify-center max-w-2xl w-full">
-                  <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                </div>
-              )}
+
+          {/* Messages container on top of background */}
+          <div className="relative z-10 flex-1 overflow-y-auto px-5 py-4 w-full">
+            <div className="flex flex-col items-center min-h-full">
+              <div className="flex-1" />
+              <div className="w-full flex flex-col items-center">
+                {isClient ? (
+                  <>
+                    <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
+                    {status === "submitted" && (
+                      <div className="flex justify-start max-w-3xl w-full">
+                        <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="flex justify-center max-w-2xl w-full">
+                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-        
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible pt-13">
+
+        {/* PART 3: Input box and footer */}
+        <div className="flex-shrink-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible">
           <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
+            {/* Loader pill placed just above the input box */}
+            {(status === "submitted" || status === "streaming") && (
+              <div aria-live="polite" className="w-full flex justify-center mb-3">
+                <div className="inline-flex items-center gap-3 px-3 py-2 rounded-full bg-blue-600 text-white text-sm shadow-md">
+                  <Loader2 className="size-4 animate-spin text-white" />
+                  <span>{loadingPhrases[loaderTextIndex]}</span>
+                </div>
+              </div>
+            )}
             <div className="message-fade-overlay" />
             <div className="max-w-3xl w-full">
               <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
@@ -267,6 +308,6 @@ export default function Chat() {
           </div>
         </div>
       </main>
-    </div >
+    </div>
   );
 }

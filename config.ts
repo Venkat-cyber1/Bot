@@ -30,7 +30,7 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "MatchMate";
+export const AI_NAME = "Raul";
 export const OWNER_NAME = "Venkat K";
 export const CURRENT_MATCH_ID = "match_1";
 
