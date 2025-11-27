@@ -30,10 +30,11 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "MyBot";
+export const AI_NAME = "MatchMate";
 export const OWNER_NAME = "Venkat K";
+export const CURRENT_MATCH_ID = "match_1";
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, an AI assistant created by ${OWNER_NAME}.`
+export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, your live football match companion. I can help you with live match analysis, player performance, tactical insights, historical stats, and what fans are saying. Ask me anything about the match!`
 
 export const CLEAR_CHAT_TEXT = "New";
 

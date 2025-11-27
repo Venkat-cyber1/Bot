@@ -143,16 +143,16 @@ export default function Chat() {
           <div className="relative overflow-visible">
             <ChatHeader>
               <ChatHeaderBlock />
-              <ChatHeaderBlock className="justify-center items-center">
+              <ChatHeaderBlock className="justify-center items-center gap-3">
                 <Avatar
-                  className="size-8 ring-1 ring-primary"
+                  className="size-12 ring-1 ring-primary"
                 >
                   <AvatarImage src="/logo.png" />
                   <AvatarFallback>
-                    <Image src="/logo.png" alt="Logo" width={36} height={36} />
+                    <Image src="/logo.png" alt="Logo" width={48} height={48} />
                   </AvatarFallback>
                 </Avatar>
-                <p className="tracking-tight">Chat with {AI_NAME}</p>
+                <p className="text-lg font-semibold tracking-tight">Chat with {AI_NAME}</p>
               </ChatHeaderBlock>
               <ChatHeaderBlock className="justify-end">
                 <Button
@@ -168,24 +168,41 @@ export default function Chat() {
             </ChatHeader>
           </div>
         </div>
-        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[150px]">
-          <div className="flex flex-col items-center justify-end min-h-full">
-            {isClient ? (
-              <>
-                <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
-                {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="flex justify-center max-w-2xl w-full">
-                <Loader2 className="size-4 animate-spin text-muted-foreground" />
-              </div>
-            )}
+        {/* Background image covering center area from below header to above input */}
+        <div className="fixed top-[88px] bottom-[200px] left-0 right-0 z-0 flex justify-center items-center pointer-events-none">
+          <div className="relative w-full h-full">
+            <Image
+              src="/background-center.png"
+              alt="Background decoration"
+              fill
+              className="object-contain opacity-50 dark:opacity-30"
+              priority={false}
+            />
           </div>
         </div>
+        
+        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[200px] relative z-10">
+          <div className="flex flex-col items-center min-h-full">
+            <div className="flex-1" />
+            <div className="w-full flex flex-col items-center">
+              {isClient ? (
+                <>
+                  <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
+                  {status === "submitted" && (
+                    <div className="flex justify-start max-w-3xl w-full">
+                      <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="flex justify-center max-w-2xl w-full">
+                  <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible pt-13">
           <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
             <div className="message-fade-overlay" />

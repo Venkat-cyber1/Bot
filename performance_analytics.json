@@ -1,0 +1,185 @@
+[ 
+  {
+    "id": "match1_window_00_05",
+    "namespace": "performance_analytics",
+    "text": "Minutes 0–5: Fast opening passage. Redchester win first duel in midfield and force Blueport to play long repeatedly. Arjun Rao (10) attempts early vertical passes; 4 passes attempted, 3 successful. Team territorial map shows Redchester spending most of this mini-window in Blueport's half.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 0,
+      "end_minute": 5,
+      "team_id": "team_RED",
+      "players": ["RED_10"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Basic football pitch diagram useful as a background for micro heatmaps."
+    }
+  },
+  {
+    "id": "match1_window_05_10",
+    "namespace": "performance_analytics",
+    "text": "Minutes 5–10: Redchester probe down the right flank. Right-back overlaps twice, enabling a cross into the box that causes a scramble. Leo Mendes (9) records two penalty-area touches but no clean shot. Defensive duels won by Blueport full-back interrupt the sequence.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 5,
+      "end_minute": 10,
+      "team_id": "team_RED",
+      "players": ["RED_9"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Football pitch template to overlay attack-right sequences."
+    }
+  },
+  {
+    "id": "match1_window_10_15",
+    "namespace": "performance_analytics",
+    "text": "Minutes 10–15: Intense pressing from Redchester starts to produce turnovers in final third. Two turnovers inside Blueport half result in low-xG shots. Arjun Rao completes an incisive pass that breaks the first defensive line (1 progressive pass this window).",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 10,
+      "end_minute": 15,
+      "team_id": "team_RED",
+      "players": ["RED_10"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Pressure_diagram.jpg",
+      "image_alt": "Pressure diagram — concept visual useful for illustrating pressing/pressure ideas."
+    }
+  },
+  {
+    "id": "match1_window_15_20",
+    "namespace": "performance_analytics",
+    "text": "Minutes 15–20: Blueport adjust by staying slightly wider; Marco Silva (7) receives more isolations on the right. He completes 2 successful dribbles and forces a Redchester wing-back to commit, which opens interior passing lanes.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 15,
+      "end_minute": 20,
+      "team_id": "team_BLUE",
+      "players": ["BLUE_7"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch template for showing wide-player touches and dribble corridors."
+    }
+  },
+  {
+    "id": "match1_window_20_25",
+    "namespace": "performance_analytics",
+    "text": "Minutes 20–25: Transitional moments dominate. Redchester convert a turnover to a quick 3-pass sequence. Leo Mendes (9) times a diagonal run behind the defence (1 through ball / 1 xG chance). Blueport start to drop their wingers to nullify space in behind.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 20,
+      "end_minute": 25,
+      "team_id": "team_RED",
+      "players": ["RED_9", "RED_10"],
+      "type": "micro_window",
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer gallery — examples of heatmaps/shotmaps you can reproduce for this micro-window."
+    }
+  },
+  {
+    "id": "match1_window_25_30",
+    "namespace": "performance_analytics",
+    "text": "Minutes 25–30: Pressing pays off: Redchester win ball high and create a cutback; shot saved. Pressing success rate measured at ~38% in this block. Arjun Rao influences play by dropping between lines (2 key passes in this period).",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 25,
+      "end_minute": 30,
+      "team_id": "team_RED",
+      "players": ["RED_10"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Pressure_diagram.jpg",
+      "image_alt": "Pressure concept diagram illustrating pressing success and recovered turnovers."
+    }
+  },
+  {
+    "id": "match1_window_30_35",
+    "namespace": "performance_analytics",
+    "text": "Minutes 30–35: Blueport grow into the game — longer possession sequences and 2 chances from crosses. Centre-forward Diego Costa wins an aerial duel and forces a save. Redchester's midfield distance between lines increases slightly, allowing Blueport to work the ball through midfield.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 30,
+      "end_minute": 35,
+      "team_id": "team_BLUE",
+      "players": ["BLUE_9"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch background for showing aerial duel locations and cross entry points."
+    }
+  },
+  {
+    "id": "match1_window_35_40",
+    "namespace": "performance_analytics",
+    "text": "Minutes 35–40: Transitional period; Arjun Rao attempts long-range strike that hits crossbar (xG 0.07). Blueport attempt to exploit spaces on counter; full-backs take more risks overlapping into final third.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 35,
+      "end_minute": 40,
+      "team_id": "team_RED",
+      "players": ["RED_10"],
+      "type": "micro_window",
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer gallery showing heatmap/shot timeline visualizations useful for this event."
+    }
+  },
+  {
+    "id": "match1_window_40_45",
+    "namespace": "performance_analytics",
+    "text": "Minutes 40–45: Late half flurry: Blueport win a corner that produces a headed on-target shot. Redchester remain compact centrally but concede more set-piece threats. No scoring events; tactical notes indicate Blueport success when crossing from right flank.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 40,
+      "end_minute": 45,
+      "team_id": "team_BLUE",
+      "players": ["BLUE_7", "BLUE_9"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch diagram — good to overlay corner threat polygons and aerial duel markers."
+    }
+  },
+  {
+    "id": "match1_window_45_50",
+    "namespace": "performance_analytics",
+    "text": "Minutes 45–50: Early second half: Redchester restart energetic, registering two early progressive carries. Leo Mendes times a run in the 48th minute that opens the defence; assist follows two minutes later from Arjun Rao leading to a goal (goal at 50').",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 45,
+      "end_minute": 50,
+      "team_id": "team_RED",
+      "players": ["RED_9", "RED_10"],
+      "type": "micro_window",
+      "score_home": 1,
+      "score_away": 0,
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer examples showing pass network / goal-sequence plots to recreate the 9-pass move and goal."
+    }
+  },
+  {
+    "id": "match1_window_50_55",
+    "namespace": "performance_analytics",
+    "text": "Minutes 50–55: After goal, Redchester hold more possession. Ravi Iyer (6) increases ball recoveries and breaks up counters (3 tackles, 1 interception this window). Blueport attempt to push fullbacks higher to generate width.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 50,
+      "end_minute": 55,
+      "team_id": "team_RED",
+      "players": ["RED_6"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch template for possession and interception visual overlays."
+    }
+  },
+  {
+    "id": "match1_window_55_60",
+    "namespace": "performance_analytics",
+    "text": "Minutes 55–60: Redchester control tempo and limit Blueport to low-xG attempts. Arjun Rao's sprint count begins to reduce; coaching note flags potential late substitution around minute 70 if fatigue persists.",
+    "metadata": {
+      "match_id": "match_1",
+      "start_minute": 55,
+      "end_minute": 60,
+      "team_id": "team_RED",
+      "players": ["RED_10"],
+      "type": "micro_window",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Pressure_diagram.jpg",
+      "image_alt": "Pressure concept visual to illustrate changing pressing intensity and fatigue."
+    }
+  }
+]
+

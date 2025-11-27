@@ -1,0 +1,117 @@
+[
+  {
+    "id": "career_SUMMARY_player_RED_10",
+    "namespace": "historic_knowledge",
+    "text": "Career summary: Arjun Rao (RED_10) – career to date (through 2024): 220 club appearances, 58 goals, 67 assists. Known for left half-space creativity and late-game influence; career average minutes per appearance 78. Injury history: minor hamstring issues in 2021 and 2023 that led to 2–3 week rests.",
+    "metadata": {
+      "type": "player_career",
+      "player_id": "RED_10",
+      "player_name": "Arjun Rao",
+      "team_id": "team_RED",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch diagram useful as a background for player career heatmaps."
+    }
+  },
+  {
+    "id": "season_2023_24_player_RED_10",
+    "namespace": "historic_knowledge",
+    "text": "Season 2023–24: Arjun Rao: 37 appearances, 12 goals, 10 assists, 0.48 xG+xA per 90. Substitution pattern: typically removed between 72–78 minutes to manage high-intensity pressing workload.",
+    "metadata": {
+      "type": "player_season",
+      "season": "2023-24",
+      "player_id": "RED_10",
+      "player_name": "Arjun Rao",
+      "team_id": "team_RED",
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer gallery for season-level heatmaps and pass networks to illustrate season patterns."
+    }
+  },
+  {
+    "id": "season_2023_24_player_RED_9",
+    "namespace": "historic_knowledge",
+    "text": "Season 2023–24: Leo Mendes (STR): 34 appearances, 20 goals, 6 assists, averaged 3.0 shots per 90 and 0.61 xG per 90. Strong inside-box presence and frequent penalty-area touches.",
+    "metadata": {
+      "type": "player_season",
+      "season": "2023-24",
+      "player_id": "RED_9",
+      "player_name": "Leo Mendes",
+      "team_id": "team_RED",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch template — good to overlay a season shot map for a striker profile."
+    }
+  },
+  {
+    "id": "notable_match_RED_comeback_2023_11_02_longform",
+    "namespace": "historic_knowledge",
+    "text": "Deep dive: Redchester FC 3–2 Coastal City (02 Nov 2023). Tactical pivot at halftime: manager moved to an aggressive high press and inverted full-back setup; Arjun Rao scored a long-range goal and provided two assists. The match is frequently referenced as a manager-level example of shifting identity mid-game.",
+    "metadata": {
+      "type": "notable_match_longform",
+      "match_id": "match_prev_RED_comeback_2023_11_02",
+      "date": "2023-11-02",
+      "team_id": "team_RED",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch template to visualize the tactic switch (high press + inverted full-backs) used in the comeback."
+    }
+  },
+  {
+    "id": "historic_tactic_case_study_highpress_success",
+    "namespace": "historic_knowledge",
+    "text": "Case study: High press success when combined with quick transitional vertical passes — example: Redchester vs Coastal City (Nov 2023). Key factors: fitness level to sustain press, coordinated triggers from centre-forward, and midfield support to win second balls. Risk: space behind the press exploitable by accurate long passes.",
+    "metadata": {
+      "type": "tactic_case_study",
+      "tactic_name": "high_press_case_study",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Pressure_diagram.jpg",
+      "image_alt": "Pressure diagram — conceptual art useful to illustrate press mechanics and trade-offs."
+    }
+  },
+  {
+    "id": "historic_match_prev_RED_BLUE_2024_03_10_deep",
+    "namespace": "historic_knowledge",
+    "text": "Deep match log: Redchester FC 2–2 Blueport United (10 Mar 2024) — Redchester built 2–0 lead via early exploitation of wide spaces; Blueport switched to a high-press 4-3-3 in the second half and scored twice. xG: 2.1 vs 2.0. Tactical note: Blueport's second-half pressing forced several long clearances that became second-phase chances.",
+    "metadata": {
+      "type": "historic_match",
+      "match_id": "match_prev_RED_BLUE_2024_03_10",
+      "date": "2024-03-10",
+      "home_team": "Redchester FC",
+      "away_team": "Blueport United",
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer gallery — examples of comparative xG plots, pass networks, and tactical adjustments."
+    }
+  },
+  {
+    "id": "team_style_long_RED",
+    "namespace": "historic_knowledge",
+    "text": "Team long-form identity: Redchester FC (last 3 seasons) — primary traits: front-foot high press at home, left half-space emphasis, and a tendency to switch to compact 4-5-1 when leading. Squad conditioning program emphasizes repeated-sprint work to maintain press across 90 minutes.",
+    "metadata": {
+      "type": "team_identity_long",
+      "team_id": "team_RED",
+      "team_name": "Redchester FC",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Football_pitch_small.png",
+      "image_alt": "Pitch template; use with season radar charts and pass network images to show identity."
+    }
+  },
+  {
+    "id": "tactic_explainer_press_variants_long",
+    "namespace": "historic_knowledge",
+    "text": "Tactic explainer — press variants: High press (aggressive frontline pressure), mid press (compact midfield band), low block (deep compact shape). Each variant suits different match states: high press to chase goals, low block to protect narrow leads. Coaches often blend variants during a match based on score and opponent shape.",
+    "metadata": {
+      "type": "tactic_explainer",
+      "tactic_name": "press_variants",
+      "related_terms": ["high_press", "mid_press", "low_block"],
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Pressure_diagram.jpg",
+      "image_alt": "Pressure diagram plus pitch schematics useful for comparing press types and risks."
+    }
+  },
+  {
+    "id": "player_comparison_RED10_vs_RED9_2022_24",
+    "namespace": "historic_knowledge",
+    "text": "Player comparison (2022–24): Arjun Rao (10) vs Leo Mendes (9) — Rao offers progressive passing and link play (higher pass completion between midfield and final third), Mendes offers box presence and finishing (higher shots per 90 and penalty-area touches). Combine well when Rao drifts to half-spaces and Mendes times runs beyond the last defender.",
+    "metadata": {
+      "type": "player_comparison",
+      "players": ["RED_10", "RED_9"],
+      "team_id": "team_RED",
+      "image_url": "https://mplsoccer.readthedocs.io/en/latest/gallery/index.html",
+      "image_alt": "mplsoccer gallery visuals suitable for producing a comparison chart of passes vs shots vs heatmaps."
+    }
+  }
+]

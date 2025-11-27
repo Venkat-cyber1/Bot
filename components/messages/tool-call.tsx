@@ -22,6 +22,23 @@ function formatWebSearchArgs(_: string, input: unknown): string {
     }
 }
 
+function formatVectorSearchArgs(_: string, input: unknown): string {
+    try {
+        if (typeof input !== 'object' || input === null) {
+            return "";
+        }
+        const args = input as Record<string, unknown>;
+        const query = args.query ? String(args.query) : "";
+        const namespace = args.namespace ? String(args.namespace) : "";
+        if (query && namespace) {
+            return `${query} (${namespace})`;
+        }
+        return query || namespace || "";
+    } catch {
+        return "";
+    }
+}
+
 const TOOL_DISPLAY_MAP: Record<string, ToolDisplay> = {
     webSearch: {
         call_label: "Searching the web",
@@ -29,6 +46,13 @@ const TOOL_DISPLAY_MAP: Record<string, ToolDisplay> = {
         result_label: "Searched the web",
         result_icon: <Search className="w-4 h-4" />,
         formatArgs: formatWebSearchArgs,
+    },
+    vectorDatabaseSearch: {
+        call_label: "Searching vector database",
+        call_icon: <Book className="w-4 h-4" />,
+        result_label: "Found relevant match data",
+        result_icon: <Book className="w-4 h-4" />,
+        formatArgs: formatVectorSearchArgs,
     },
 };
 
