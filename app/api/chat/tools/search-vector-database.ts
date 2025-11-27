@@ -7,7 +7,7 @@ export const vectorDatabaseSearch = tool({
     inputSchema: z.object({
         query: z.string().describe('Natural language query about Real Madrid tactics, players, club identity, or strategy. For example: "How does Real Madrid defend?" or "What is Bellingham\'s role?"'),
         namespace: z.string().default('historic_knowledge').describe('The Pinecone namespace to search. Use "historic_knowledge" for Real Madrid club knowledge.'),
-        filters: z.record(z.any()).optional().describe('Optional metadata filters for Pinecone. For example: { "player_name": { "$eq": "Bellingham" } }'),
+        filters: z.record(z.string(), z.any()).optional().describe('Optional metadata filters for Pinecone. For example: { "player_name": { "$eq": "Bellingham" } }'),
     }),
     execute: async ({ query, namespace = 'historic_knowledge', filters }) => {
         const searchResult = await searchPinecone(query, namespace, filters);
